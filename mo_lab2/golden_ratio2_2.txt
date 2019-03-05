@@ -1,0 +1,81 @@
+        void golden_ratio2()
+        {
+            int k = 0; //Количество итераций
+            int r = 0; //Количество вычислений
+            bool flag = false;
+
+            double a, b, a1, b1;
+            double f1 = 0, f2 = 0;
+            double x_1 = 0, x_2 = 0, y_1 = 0, y_2 = 0;
+            double f = (1 + Math.Sqrt(5)) / 2;
+
+            x3 = Convert.ToDouble(textBox1.Text);
+            x2 = Convert.ToDouble(textBox2.Text);
+            x = Convert.ToDouble(textBox3.Text);
+            c = Convert.ToDouble(textBox4.Text);
+
+            a = Convert.ToDouble(textBox5.Text);
+            b = Convert.ToDouble(textBox6.Text);
+            e = Convert.ToDouble(textBox7.Text);
+            d = Convert.ToDouble(textBox8.Text);
+
+            while (k < 1000)
+            {
+                k += 1;
+
+                if (Math.Abs(b - a) < e) //Если решение было найдено, прерываем цикл
+                {
+                    break;
+                }
+                else
+                {
+                    if (k == 1)
+                    {
+                        x_1 = b - ((b - a) / f);
+                        x_2 = a + ((b - a) / f);
+
+                        y_1 = func(x3, x2, x, c, x_1);
+                        y_2 = func(x3, x2, x, c, x_2);
+
+                        r += 2;
+                    }
+                    else
+                    {
+                        if(flag == false)
+                        {
+                            x_2 = a + ((b - a) / f);
+
+                            y_1 = func(x3, x2, x, c, x_1);
+                            y_2 = func(x3, x2, x, c, x_2);
+                        }
+                        else
+                        {
+                            x_1 = b - ((b - a) / f);
+
+                            y_1 = func(x3, x2, x, c, x_1);
+                            y_2 = func(x3, x2, x, c, x_2);
+                        }
+
+                        r += 1;
+                    }
+
+                    if(y_1 > y_2)
+                    {
+                        a = x_1;
+                        flag = false;
+                    }
+                    else
+                    {
+                        b = x_2;
+                        flag = true;
+                    }
+                }
+            }
+
+            textBox10.Text = "";
+            textBox10.AppendText("Количество итераций: " + k + "\n");
+            textBox10.AppendText("Количество вычислений: " + r + "\n");
+            textBox10.AppendText("Конечные значения:\n");
+            textBox10.AppendText("an = " + Convert.ToString(a) + "\n");
+            textBox10.AppendText("bn = " + Convert.ToString(b) + "\n");
+        }
