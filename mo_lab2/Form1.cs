@@ -106,6 +106,8 @@ namespace mo_lab2
             tbOutDichotomy.AppendText("Количество итераций: " + k + "\n");
             tbOutDichotomy.AppendText("Количество вычислений: " + r + "\n\n");
             tbOutDichotomy.AppendText("Конечные значения:\n");
+            tbOutDichotomy.AppendText("an = " + Convert.ToString(a1) + "\n");
+            tbOutDichotomy.AppendText("bn = " + Convert.ToString(b1) + "\n");
             tbOutDichotomy.AppendText("x = " + Convert.ToString(middle) + "\n");
             tbOutDichotomy.AppendText("y = " + Convert.ToString(fMiddle) + "\n");
         }
