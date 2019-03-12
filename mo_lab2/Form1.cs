@@ -12,7 +12,7 @@ namespace mo_lab2
 {
     public partial class OneDimensionalSearchForm : Form
     {
-        double x3, x2, x, c, a0, b0, e, d, s;
+        double x3, x2, x, c, a0, b0, e;
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -54,8 +54,8 @@ namespace mo_lab2
             int k = 0; //Количество итераций
             int r = 0; //Количество вычислений
 
-            double a1, b1;
-            double f1, f2;
+            double a1, b1, middle = 0;
+            double fStart, fEnd, fMiddle = 0;
             double x_1 = 0, x_2 = 0;
 
 
@@ -67,7 +67,6 @@ namespace mo_lab2
             a0 = Convert.ToDouble(textBox5.Text);
             b0 = Convert.ToDouble(textBox6.Text);
             e = Convert.ToDouble(textBox7.Text);
-            d = Convert.ToDouble(textBox8.Text);
 
             a1 = a0; b1 = b0;
 
@@ -75,26 +74,31 @@ namespace mo_lab2
             {
                 k++;
 
-                if (Math.Abs(b1 - a1) < e) //Если решение было найдено, прерываем цикл
+                middle = (a1 + b1) / 2;
+                fMiddle = func(x3, x2, x, c, middle);
+
+                if (Math.Abs(fMiddle) < e) //Если решение было найдено, прерываем цикл
                 {
                     break;
                 }
 
-                x_1 = ((a1 + b1) - d) / 2;
-                x_2 = ((a1 + b1) + d) / 2;
 
-                f1 = func(x3, x2, x, c, x_1);
-                f2 = func(x3, x2, x, c, x_2);
+                fStart = func(x3, x2, x, c, a1);
+                fEnd = func(x3, x2, x, c, b1);
 
                 r += 4;
 
-                if (f1 < f2)
+                if (fMiddle * fStart < 0)
                 {
-                    b1 = x_2;
+                    b1 = middle;
+                }
+                else if(fMiddle * fEnd < 0)
+                {
+                    a1 = middle;
                 }
                 else
                 {
-                    a1 = x_1;
+                    throw new Exception("на [a,b] должен быть расположен один корень!");
                 }
             }
 
@@ -102,10 +106,8 @@ namespace mo_lab2
             tbOutDichotomy.AppendText("Количество итераций: " + k + "\n");
             tbOutDichotomy.AppendText("Количество вычислений: " + r + "\n\n");
             tbOutDichotomy.AppendText("Конечные значения:\n");
-            tbOutDichotomy.AppendText("an = " + Convert.ToString(a1) + "\n");
-            tbOutDichotomy.AppendText("bn = " + Convert.ToString(b1) + "\n");
-            tbOutDichotomy.AppendText("x = " + Convert.ToString((a1 + b1) / 2) + "\n");
-            tbOutDichotomy.AppendText("y = " + Convert.ToString(func(x3, x2, x, c, ((a1 + b1) / 2))) + "\n");
+            tbOutDichotomy.AppendText("x = " + Convert.ToString(middle) + "\n");
+            tbOutDichotomy.AppendText("y = " + Convert.ToString(fMiddle) + "\n");
         }
 
         void golden_ratio()
@@ -126,7 +128,6 @@ namespace mo_lab2
             a = Convert.ToDouble(textBox5.Text);
             b = Convert.ToDouble(textBox6.Text);
             e = Convert.ToDouble(textBox7.Text);
-            d = Convert.ToDouble(textBox8.Text);
 
             while (k < 1000)
             {
